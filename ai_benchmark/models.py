@@ -4,13 +4,13 @@
 from ai_benchmark.utils import tf
 from ai_benchmark.model_utils import *
 
+import tensorflow as tf
+from tensorflow.keras.layers import LSTM
 
 def LSTM_Sentiment(input_tensor):
-
-    #  Reference Paper: https://www.bioinf.jku.at/publications/older/2604.pdf
-
-    lstmCell = tf.compat.v1.nn.rnn_cell.BasicLSTMCell(1024)
-    output_rnn, _ = tf.compat.v1.nn.dynamic_rnn(lstmCell, input_tensor, dtype=tf.float32)
+    # Reference Paper: https://www.bioinf.jku.at/publications/older/2604.pdf
+    lstm_cell = LSTM(1024, return_sequences=True)
+    output_rnn = lstm_cell(input_tensor)
 
     W_fc = tf.Variable(tf.random.truncated_normal([1024, 2]))
     b_fc = tf.Variable(tf.constant(0.1, shape=[2]))
@@ -19,6 +19,21 @@ def LSTM_Sentiment(input_tensor):
     output = tf.gather(output_transposed, int(output_transposed.get_shape()[0]) - 1)
 
     return tf.identity(tf.matmul(output, W_fc) + b_fc, name="output")
+
+#def LSTM_Sentiment(input_tensor):
+
+    #  Reference Paper: https://www.bioinf.jku.at/publications/older/2604.pdf
+
+#    lstmCell = tf.compat.v1.nn.rnn_cell.BasicLSTMCell(1024)
+#    output_rnn, _ = tf.compat.v1.nn.dynamic_rnn(lstmCell, input_tensor, dtype=tf.float32)
+
+#    W_fc = tf.Variable(tf.random.truncated_normal([1024, 2]))
+#    b_fc = tf.Variable(tf.constant(0.1, shape=[2]))
+
+#    output_transposed = tf.transpose(output_rnn, perm=[1, 0, 2])
+#    output = tf.gather(output_transposed, int(output_transposed.get_shape()[0]) - 1)
+
+#    return tf.identity(tf.matmul(output, W_fc) + b_fc, name="output")
 
 
 def PixelRNN(inputs):
