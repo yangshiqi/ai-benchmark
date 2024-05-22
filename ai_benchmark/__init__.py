@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 from ai_benchmark.utils import *
-
+import warnings
 
 class AIBenchmark:
 
@@ -15,7 +15,7 @@ class AIBenchmark:
         if verbose_level > 0:
             printIntro()
 
-        np.warnings.filterwarnings('ignore')
+        warnings.filterwarnings('ignore')
 
         try:
 
