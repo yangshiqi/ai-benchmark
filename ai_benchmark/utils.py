@@ -546,7 +546,11 @@ def run_tests(training, inference, micro, verbose, use_CPU, precision, _type, st
             config = tf.compat.v1.ConfigProto()
         else:
             config = tf.ConfigProto()
-        config.gpu_options.visible_device_list= '0,1'
+
+        #config.gpu_options.visible_device_list= '0,1'
+        num_devices = len(testInfo.gpu_devices)
+        config.gpu_options.visible_device_list= ','.join(map(str, range(num_devices)))
+        
         print("##### Config Done")
 
     for test in benchmark_tests:
