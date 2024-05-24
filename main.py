@@ -1,5 +1,6 @@
 
 import ai_benchmark
+import os, sys
 
 
 def main():
@@ -13,5 +14,8 @@ def main():
 
 
 if __name__ == "__main__":
+    if not os.path.exists(os.getcwd() + "/ai_benchmark/config.py"):
+        sys.exit("ai_benchmark/config.py does not exist. Please make your config.py first.")
+
     # execute only if run as a script
     main()
